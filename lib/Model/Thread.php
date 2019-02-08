@@ -19,9 +19,11 @@ class Thread extends \Bbs\Model {
 
   // 最新のコメント取得
   public function getCommnet($thread_id){
-    // 最新のコメント5件を表示する
-    $stmt = $this->db->prepare("select comment_num,username,content,comments.created from (threads inner join comments on threads.id = comments.thread_id) INNER JOIN  users ON comments.user_id = users.id where threads.id =:thread_id order by comment_num ASC limit 5;");
-    $stmt->execute([':thread_id' => $thread_id]);
+    // コメント5件を表示する
+    // $stmt = $this->db->prepare("select comment_num,username,content,comments.created from (threads inner join comments on threads.id = comments.thread_id) INNER JOIN  users ON comments.user_id = users.id where threads.id =:thread_id order by comment_num ASC limit 5;");
+    $stmt = $this->db->prepare("SELECT * FROM comments WHERE thread_id = 16;");
+    $stmt->execute();
+    // $stmt->execute([':thread_id' => $thread_id]);
     return $stmt->fetchAll(\PDO::FETCH_OBJ);
   }
 
