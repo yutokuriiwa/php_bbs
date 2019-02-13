@@ -15,6 +15,7 @@ class Thread extends \Bbs\Controller {
     $threadModel = new \Bbs\Model\Thread();
     $threadModel->createComment([
       'thread_id' => $_POST['thread_id'],
+      'user_id' => $_SESSION['me']->id,
       'content' => $_POST['content']
     ]);
   }

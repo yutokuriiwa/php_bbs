@@ -1,6 +1,6 @@
 @charset "utf-8";
 html {
-  font-size: 62.5%;
+  // font-size: 62.5%;
   font-family: "Josefin Sans",sans-serif;
   -webkit-font-smoothing: antialiased;
   font-weight: 200;
@@ -35,21 +35,30 @@ label {
 
 .header {
   background: rgba(245, 244, 244, 0.705);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   nav {
-    max-width: 980px;
-    margin: auto;
+    width: 80%;
+    // margin: auto;
     ul {
       display: flex;
       padding: 20px 0;
       li {
         font-size: 20px;
-        flex-basis: 20%;
+        flex-basis: 15%;
         font-family: 'M PLUS Rounded 1c', sans-serif;
         text-align: center;
         display: flex;
         align-items: center;
         justify-content: center;
       }
+    }
+  }
+  .name {
+    width: 20%;
+    span {
+      font-weight: bold;
     }
   }
 }
@@ -59,6 +68,10 @@ label {
     color: #007bff;
     background: none;
     border: none;
+    &:hover {
+      color: #0056b3;
+      text-decoration: underline;
+    }
   }
 }
 
@@ -77,8 +90,8 @@ label {
   &__item {
     background: #fafafa;
     border: 1px solid rgb(102, 97, 97);
-    padding: 2rem;
-    margin-bottom: 5rem;
+    padding: 20px;
+    margin-bottom: 50px;
     .comment-page.thread__date {
       text-align: right;
     }
@@ -87,7 +100,7 @@ label {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 4rem;
+    margin-bottom: 40px;
   }
   &__ttl {
     font-size: 30px;
@@ -96,16 +109,16 @@ label {
     font-family: 'M PLUS Rounded 1c', sans-serif;
   }
   &__date {
-    font-size: 1.5rem;
+    font-size: 15px;
   }
 }
 
 .thread__body {
   .comment__item {
-    margin-bottom: 3rem;
+    margin-bottom: 30px;
     &__head {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
+      font-size: 15px;
+      margin-bottom: 10px;
     }
     &__name {
       color: rgb(60, 112, 224);
@@ -115,7 +128,7 @@ label {
       font-weight: bold;
     }
     &__content {
-      font-size: 1.5rem;
+      font-size: 15px;
     }
   }
 }
@@ -124,14 +137,14 @@ label {
   .form-group {
     width: 500px;
     margin: 0 auto 0 0;
-    font-size: 1.5rem;
+    font-size: 15px;
     textarea {
       resize: none;
       font-size: 18px;
       height: 200px;
     }
     input[type="submit"] {
-      margin-top: 3rem;
+      margin-top: 30px;
       padding: 10px;
     }
   }
@@ -183,7 +196,6 @@ label {
   }
 }
 
-
 .comment-confirm {
   .guide {
     font-size: 20px;
@@ -206,4 +218,9 @@ label {
   p {
     margin-bottom: 20px;
   }
+}
+
+.fs12 {
+  max-width: 600px;
+  margin: 20px auto 0;
 }

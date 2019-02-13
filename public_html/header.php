@@ -22,7 +22,7 @@ require_once(__DIR__ .'/../config/config.php');
       <li><a href="<?= SITE_URL; ?>">ホーム</a></li>
       <?php
       if(isset($_SESSION['me'])) { ?>
-      <li><a href="<?= SITE_URL; ?>/create_thread.php">新規投稿</a></li>
+      <li><a href="<?= SITE_URL; ?>/create_thread.php">スレッド作成</a></li>
       <li class="mypage"><a href="<?= SITE_URL; ?>/mypage.php">マイページ</a></li>
       <li class="user-btn">
       <form action="logout.php" method="post" id="logout">
@@ -36,6 +36,10 @@ require_once(__DIR__ .'/../config/config.php');
       <?php } ?>
     </ul>
   </nav>
+  <?php
+    if(isset($_SESSION['me'])) { ?>
+    <div class="name">こんにちは <span><?= h($_SESSION['me']->username); ?></span>さん</div>
+    <?php  } ?>
 </header>
 <div class="wrapper">
 

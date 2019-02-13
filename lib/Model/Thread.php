@@ -18,17 +18,15 @@ class Thread extends \Bbs\Model {
   }
 
   // 最新のコメント取得
-  public function getCommnet($thread_id){
+  public function getComment($thread_id){
     // コメント5件を表示する
-    // $stmt = $this->db->prepare("select comment_num,username,content,comments.created from (threads inner join comments on threads.id = comments.thread_id) INNER JOIN  users ON comments.user_id = users.id where threads.id =:thread_id order by comment_num ASC limit 5;");
-    $stmt = $this->db->prepare("SELECT * FROM comments WHERE thread_id = 16;");
-    $stmt->execute();
-    // $stmt->execute([':thread_id' => $thread_id]);
+    $stmt = $this->db->prepare("select comment_num,username,content,comments.created from (threads inner join comments on threads.id = comments.thread_id) INNER JOIN  users ON comments.user_id = users.id where threads.id =:thread_id order by comment_num ASC limit 5;");
+    $stmt->execute([':thread_id' => $thread_id]);
     return $stmt->fetchAll(\PDO::FETCH_OBJ);
   }
 
   // コメント全件取得
-  public function getCommnetAll($thread_id){
+  public function getCommentAll($thread_id){
     // すべてのコメントを取得する
     $stmt = $this->db->prepare("select comment_num,username,content,comments.created from (threads inner join comments on threads.id = comments.thread_id) INNER JOIN  users ON comments.user_id = users.id where threads.id =:thread_id order by comment_num ASC;");
     $stmt->execute([':thread_id' => $thread_id]);
@@ -52,7 +50,7 @@ class Thread extends \Bbs\Model {
   }
 
   public function createComment($values) {
-    // Todo バリデーション
+    // Todo バリデーション 不正投稿処理
     try {
       // トランザクションを開始する
       $this->db->beginTransaction();
@@ -68,7 +66,7 @@ class Thread extends \Bbs\Model {
       $stmt = $this->db->prepare($sql);
       $stmt->bindValue('thread_id',$values['thread_id']);
       $stmt->bindValue('comment_num',$lastNum);
-      $stmt->bindValue('user_id',1);
+      $stmt->bindValue('user_id',$values['user_id']);
       $stmt->bindValue('content',$values['content']);
       $stmt->execute();
       // トランザクション処理を完了する
@@ -80,6 +78,7 @@ class Thread extends \Bbs\Model {
     }
   }
 
+  // To do不正投稿処理
   public function createThread($values) {
     // スレッド作成後、コメントテーブルに書き込み
     try {

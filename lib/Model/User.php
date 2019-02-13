@@ -4,8 +4,9 @@ namespace Bbs\Model;
 
 class User extends \Bbs\Model {
   public function create($values) {
-    $stmt = $this->db->prepare("insert into users (email,password,created,modified) values (:email,:password,now(),now())");
+    $stmt = $this->db->prepare("insert into users (username,email,password,created,modified) values (:username,:email,:password,now(),now())");
     $res = $stmt->execute([
+      ':username' => $values['name'],
       ':email' => $values['email'],
       ':password' => password_hash($values['password'],PASSWORD_DEFAULT)
     ]);

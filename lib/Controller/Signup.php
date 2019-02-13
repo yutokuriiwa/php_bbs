@@ -5,8 +5,8 @@ namespace Bbs\Controller;
 class Signup extends \Bbs\Controller {
   public function run() {
     if($this->isLoggedIn()) {
-      // header('Location: ' . SITE_URL);
-      // exit;
+      header('Location: ' . SITE_URL);
+      exit;
     }
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $this->postProcess();
@@ -40,6 +40,7 @@ class Signup extends \Bbs\Controller {
         $userModel = new \Bbs\Model\User();
         $userModel->create([
           'email' => $_POST['email'],
+          'name' => $_POST['name'],
           'password' => $_POST['password']
         ]);
       }
@@ -48,8 +49,35 @@ class Signup extends \Bbs\Controller {
         return;
       }
 
-      // マイページへリダイレクト
-      header('Location: '. SITE_URL . '/login.php');
+      $this->login();
+    }
+  }
+
+  protected function login() {
+
+    $this->setValues('email', $_POST['email']);
+
+    if ($this->hasError()) {
+      return;
+    } else {
+      try {
+        $userModel = new \Bbs\Model\User();
+        $user = $userModel->login([
+          'email' => $_POST['email'],
+          'password' => $_POST['password']
+        ]);
+      }
+      catch (\Bbs\Exception\UnmatchEmailOrPassword $e) {
+        $this->setErrors('login', $e->getMessage());
+        return;
+      }
+
+      // ログイン処理
+      session_regenerate_id(true);
+      $_SESSION['me'] = $user;
+
+      // トップページへリダイレクト
+      header('Location: '. SITE_URL);
       exit;
     }
   }

@@ -16,6 +16,9 @@ SET time_zone = "+00:00";
 
 -- --------------------------------------------------------
 
+drop table if exists threads;
+drop table if exists comments;
+drop table if exists users;
 --
 -- テーブルの構造 `comments`
 --
@@ -30,11 +33,6 @@ CREATE TABLE `comments` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- テーブルのデータのダンプ `comments`
---
-
 -- --------------------------------------------------------
 
 --
@@ -49,11 +47,6 @@ CREATE TABLE `threads` (
   `created` datetime DEFAULT NULL,
   `modified` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- テーブルのデータのダンプ `threads`
---
--- --------------------------------------------------------
 
 --
 -- テーブルの構造 `users`

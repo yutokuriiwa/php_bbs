@@ -16,7 +16,7 @@ $thread = $threadApp->getThread($thread_id);
     </div>
     <ul class="thread__body">
     <?php
-      $comment = $threadApp->getCommnetAll($thread->id);
+      $comment = $threadApp->getCommentAll($thread->id);
       foreach($comment as $comment_data):
     ?>
       <li class="comment__item">

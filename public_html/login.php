@@ -18,8 +18,8 @@ $app->run();
     </div>
     <p class="err"><?= h($app->getErrors('login')); ?></p>
     <button class="btn btn-primary" onclick="document.getElementById('login').submit();">ログイン</button>
-    <p class="fs12"><a href="signup.php">新規登録</a></p>
     <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">
   </form>
+  <p class="fs12"><a href="signup.php">ユーザー登録</a></p>
 </div><!--container -->
 <?php require_once(__DIR__ .'/footer.php'); ?>

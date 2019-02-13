@@ -1,5 +1,5 @@
 <?php
-  ini_set('display_errors',1);
+  // ini_set('display_errors',1);
 
   define('DSN','mysql:host=localhost;charset=utf8;dbname=db_bbs');
   define('DB_USERNAME','test');

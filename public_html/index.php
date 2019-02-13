@@ -15,9 +15,9 @@ $thread = $threadApp->getThreadAll();
       </div>
       <ul class="thread__body">
         <?php
-          $comment = $threadApp->getCommnet($thread_data->id);
-          var_dump($comment);
-          exit;
+          $comment = $threadApp->getComment($thread_data->id);
+          // var_dump($_SESSION['me']);
+          // exit;
           foreach($comment as $comment_data):
         ?>
         <li class="comment__item">
