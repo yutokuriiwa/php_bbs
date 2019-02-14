@@ -1,5 +1,6 @@
 <?php
 require_once(__DIR__ .'/header.php');
+require_once(__DIR__ . '/redirect.php');
 
 $threadApp = new Bbs\Model\Thread();
 $thread = $threadApp->getThreadAll();
@@ -16,8 +17,6 @@ $thread = $threadApp->getThreadAll();
       <ul class="thread__body">
         <?php
           $comment = $threadApp->getComment($thread_data->id);
-          // var_dump($_SESSION['me']);
-          // exit;
           foreach($comment as $comment_data):
         ?>
         <li class="comment__item">
@@ -43,30 +42,3 @@ $thread = $threadApp->getThreadAll();
 <?php
 require_once(__DIR__ .'/footer.php');
 ?>
-
-<!--
-TODO
-
-・CRUD
-C
--スレッド新規作成
--
-
-R
-- スレッド一覧画面 ページング
-
-U
-- 管理画面で更新
-
-D
-- 物理削除
-- 論理削除
-
-追加実装
-- スレッド新規作成
--- 初回コメント
-- CSV出力
-- スレッドページング
-- 管理画面
-
--->

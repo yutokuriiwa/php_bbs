@@ -1,26 +1,26 @@
 <?php
-
 //ユーザー新規登録
 require_once(__DIR__ .'/header.php');
 
 $app = new Bbs\Controller\Signup();
 $app->run();
+
 ?>
 <div class="container">
   <form action="" method="post" id="signup" class="form">
     <div class="form-group">
       <label>メールアドレス</label>
-      <input type="text" name="email" placeholder="email" value="<?= isset($app->getValues()->email) ? h($app->getValues()->email): ''; ?>" class="form-control">
+      <input type="text" name="email" value="<?= isset($app->getValues()->email) ? h($app->getValues()->email): ''; ?>" class="form-control">
       <p class="err"><?= h($app->getErrors('email')); ?></p>
     </div>
     <div class="form-group">
       <label>ユーザー名</label>
-      <input type="text" name="name" placeholder="name" value="<?= isset($app->getValues()->name) ? h($app->getValues()->name): ''; ?>" class="form-control">
-      <p class="err"><?= h($app->getErrors('email')); ?></p>
+      <input type="text" name="username" value="<?= isset($app->getValues()->username) ? h($app->getValues()->username): ''; ?>" class="form-control">
+      <p class="err"><?= h($app->getErrors('username')); ?></p>
     </div>
     <div class="form-group">
       <label>パスワード</label>
-      <input type="password" name="password" placeholder="password" class="form-control">
+      <input type="password" name="password" class="form-control">
       <p class="err"><?= h($app->getErrors('password')); ?></p>
     </div>
     <button class="btn btn-primary" onclick="document.getElementById('signup').submit();">登録</button>

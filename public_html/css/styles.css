@@ -24,6 +24,11 @@ label {
   font-size: 20px;
 }
 
+.err {
+  margin: 10px 0;
+  color: #d82626;
+}
+
 /* bbs style */
 .wrapper {
   max-width: 980px;
@@ -56,12 +61,13 @@ label {
   justify-content: center;
 }
 
-.header .name {
+.header .name-show {
   width: 20%;
 }
 
-.header .name span {
+.header .name-show span {
   font-weight: bold;
+  color: #007bff;
 }
 
 .user-btn input[type=submit] {

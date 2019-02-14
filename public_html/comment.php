@@ -1,7 +1,8 @@
 <?php
-require_once(__DIR__ .'/header.php');
-
 // コメント全件表示
+require_once(__DIR__ .'/header.php');
+require_once(__DIR__ . '/redirect.php');
+
 $thread_id = $_GET['thread_id'];
 $threadApp = new Bbs\Model\Thread();
 $thread = $threadApp->getThread($thread_id);

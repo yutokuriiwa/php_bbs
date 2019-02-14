@@ -2,12 +2,15 @@
 
 namespace Bbs\Controller;
 
+// Controllerクラス継承
 class Login extends \Bbs\Controller {
   public function run() {
+    // ログインしていればトップページへ移動
     if($this->isLoggedIn()) {
       header('Location: ' . SITE_URL);
       exit;
     }
+    // POSTメソッドがリクエストされていればpostProcessメソッド実行
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $this->postProcess();
     }
@@ -38,7 +41,9 @@ class Login extends \Bbs\Controller {
       }
 
       // ログイン処理
+      //session_regenerate_id関数･･･現在のセッションIDを新しいものと置き換える。セッションハイジャック対策
       session_regenerate_id(true);
+      // ユーザー情報をセッションに格納
       $_SESSION['me'] = $user;
 
       // トップページへリダイレクト
@@ -49,14 +54,17 @@ class Login extends \Bbs\Controller {
 
 
   private function validate() {
+    // トークンが空またはPOST送信とセッションに格納された値が異なるとエラー
     if (!isset($_POST['token']) || $_POST['token'] !== $_SESSION['token']) {
       echo "トークンが不正です!";
       exit;
     }
+    // emailとpasswordのキーがなかった場合、強制終了
     if (!isset($_POST['email']) || !isset($_POST['password'])) {
-      echo "フォームの値が入力されていません!";
+      echo "不正なフォームから登録されています!";
       exit;
     }
+    // 入力値が空だった場合エラー
     if ($_POST['email'] === '' || $_POST['password'] === '') {
       throw new \Bbs\Exception\EmptyPost();
     }

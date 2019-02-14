@@ -26,6 +26,11 @@ label {
   font-size: 20px;
 }
 
+.err {
+  margin: 10px 0;
+  color:rgb(216, 38, 38);
+}
+
 
 /* bbs style */
 .wrapper {
@@ -40,7 +45,6 @@ label {
   align-items: center;
   nav {
     width: 80%;
-    // margin: auto;
     ul {
       display: flex;
       padding: 20px 0;
@@ -55,10 +59,11 @@ label {
       }
     }
   }
-  .name {
+  .name-show {
     width: 20%;
     span {
       font-weight: bold;
+      color: #007bff;
     }
   }
 }
