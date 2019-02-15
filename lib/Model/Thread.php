@@ -5,7 +5,7 @@ namespace Bbs\Model;
 class Thread extends \Bbs\Model {
   // 全スレッド取得
   public function getThreadAll(){
-    $stmt = $this->db->query("SELECT * FROM threads ORDER BY id desc");
+    $stmt = $this->db->query("SELECT * FROM threads WHERE delflag = 0 ORDER BY id desc");
     return $stmt->fetchAll(\PDO::FETCH_OBJ);
   }
 
@@ -20,7 +20,7 @@ class Thread extends \Bbs\Model {
   // 最新のコメント取得
   public function getComment($thread_id){
     // コメント5件を表示する
-    $stmt = $this->db->prepare("SELECT comment_num,username,content,comments.created FROM (threads inner join comments on threads.id = comments.thread_id) INNER JOIN  users ON comments.user_id = users.id WHERE threads.id =:thread_id ORDER BY comment_num ASC LIMIT 5;");
+    $stmt = $this->db->prepare("SELECT comment_num,username,content,comments.created FROM (threads inner join comments on threads.id = comments.thread_id) INNER JOIN  users ON comments.user_id = users.id WHERE threads.id =:thread_id AND comments.delflag = 0 ORDER BY comment_num ASC LIMIT 5;");
     $stmt->execute([':thread_id' => $thread_id]);
     return $stmt->fetchAll(\PDO::FETCH_OBJ);
   }
@@ -28,14 +28,14 @@ class Thread extends \Bbs\Model {
   // コメント全件取得
   public function getCommentAll($thread_id){
     // すべてのコメントを取得する
-    $stmt = $this->db->prepare("SELECT comment_num,username,content,comments.created FROM (threads inner join comments on threads.id = comments.thread_id) INNER JOIN  users ON comments.user_id = users.id WHERE threads.id =:thread_id ORDER BY comment_num ASC;");
+    $stmt = $this->db->prepare("SELECT comment_num,username,content,comments.created FROM (threads inner join comments on threads.id = comments.thread_id) INNER JOIN  users ON comments.user_id = users.id WHERE threads.id =:thread_id AND comments.delflag = 0 ORDER BY comment_num ASC;");
     $stmt->execute([':thread_id' => $thread_id]);
     return $stmt->fetchAll(\PDO::FETCH_OBJ);
   }
 
   // コメント数取得
   public function getCommentCount($thread_id) {
-    $stmt = $this->db->prepare("SELECT COUNT(comment_num) FROM 	comments  WHERE thread_id = :thread_id;");
+    $stmt = $this->db->prepare("SELECT COUNT(comment_num) FROM 	comments  WHERE thread_id = :thread_id AND delflag = 0;");
     $stmt->bindValue('thread_id',$thread_id);
     $stmt->execute();
     // FETCH_ASSOCは列名を記述し配列で取り出す設定をしている。
