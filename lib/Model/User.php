@@ -40,12 +40,19 @@ class User extends \Bbs\Model {
     $stmt->setFetchMode(\PDO::FETCH_CLASS, 'stdClass');
     $user = $stmt->fetch();
 
+    // レコードが取得できなかった場合エラー
     if (empty($user)) {
       throw new \Bbs\Exception\UnmatchEmailOrPassword();
     }
 
+    // パスワードが一致しないとエラー
     if (!password_verify($values['password'], $user->password)) {
       throw new \Bbs\Exception\UnmatchEmailOrPassword();
+    }
+
+    // パスワードが一致しないとエラー
+    if ($user->delflag === 1) {
+      throw new \Bbs\Exception\UserDelete();
     }
 
     return $user;

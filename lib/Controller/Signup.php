@@ -1,5 +1,4 @@
 <?php
-
 namespace Bbs\Controller;
 
 // Controllerクラス継承
@@ -48,15 +47,19 @@ class Signup extends \Bbs\Controller {
         return;
       }
 
+      $userModel = new \Bbs\Model\User();
+      $user = $userModel->login([
+        'email' => $_POST['email'],
+        'password' => $_POST['password']
+      ]);
+
       // ユーザー登録後、ログイン処理
       //session_regenerate_id関数･･･現在のセッションIDを新しいものと置き換える。セッションハイジャック対策
-      // session_regenerate_id(true);
-      // $_SESSION['me'] = $user;
-      // var_dump($user);
-      // exit;
+      session_regenerate_id(true);
+      $_SESSION['me'] = $user;
 
       // Todo トップページへリダイレクトへ修正
-      header('Location: '. SITE_URL . '/login.php');
+      header('Location: '. SITE_URL);
       exit;
     }
   }
