@@ -2,8 +2,6 @@
 require_once(__DIR__ .'/header.php');
 require_once(__DIR__ . '/redirect.php');
 
-// $user = new Bbs\Model\User();
-// $user->find();
 $app = new Bbs\Controller\UserUpdate();
 $app->run();
 ?>
