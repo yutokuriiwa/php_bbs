@@ -2,21 +2,25 @@
 
 namespace Bbs\Controller;
 
-// Controllerクラス継承
-class Logout extends \Bbs\Controller {
-
+class UserDelete extends \Bbs\Controller {
   public function run() {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-      // CSRF対策
+    $user = new \Bbs\Model\User();
+    $userData = $user->find($_SESSION['me']->id);
+    $this->setValues('username', $userData->username);
+    $this->setValues('email', $userData->email);
+    // var_dump($_POST);
+    // exit;
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['type']) == 'delete') {
+    // バリデーション
       if (!isset($_POST['token']) || $_POST['token'] !== $_SESSION['token']) {
         echo "不正なトークンです!";
         exit;
       }
 
-      // セッション変数に格納されている値を空にする
+    $userModel = new \Bbs\Model\User();
+    $userModel->delete();
+
       $_SESSION = [];
-      // $_SESSION = array();
 
       // クッキーにセッションで使用されているクッキーの名前がセットされていたら空にする
       if (isset($_COOKIE[session_name()])) {
@@ -27,9 +31,9 @@ class Logout extends \Bbs\Controller {
       // セッションハイジャック対策
       session_destroy();
 
-    }
-
     // ログインページへリダイレクト
     header('Location: ' . SITE_URL . '/login.php');
+    exit;
+    }
   }
 }

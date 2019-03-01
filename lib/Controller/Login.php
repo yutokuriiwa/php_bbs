@@ -39,6 +39,11 @@ class Login extends \Bbs\Controller {
         $this->setErrors('login', $e->getMessage());
         return;
       }
+      // ユーザー削除フラグ
+      catch (\Bbs\Exception\DeleteUser $e) {
+        $this->setErrors('login', $e->getMessage());
+        return;
+      }
 
       // ログイン処理
       //session_regenerate_id関数･･･現在のセッションIDを新しいものと置き換える。セッションハイジャック対策
@@ -66,7 +71,7 @@ class Login extends \Bbs\Controller {
     }
     // 入力値が空だった場合エラー
     if ($_POST['email'] === '' || $_POST['password'] === '') {
-      throw new \Bbs\Exception\EmptyPost();
+      throw new \Bbs\Exception\EmptyPost("メールアドレスとパスワードを入力してください!");
     }
   }
 }

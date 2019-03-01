@@ -30,8 +30,7 @@ $thread = $threadApp->getThreadAll();
         </li>
       </ul>
       <div class="operation">
-        <!-- コメント数が5件より大きい場合、表示 -->
-        <a href="<?= SITE_URL; ?>/comment.php?thread_id=<?= $thread_data->id; ?>">すべて読む(<?= h($threadApp->getCommentCount($thread_data->id)); ?>)</a>
+        <a href="<?= SITE_URL; ?>/comment.php?thread_id=<?= $thread_data->id; ?>">書き込み&すべて読む(<?= h($threadApp->getCommentCount($thread_data->id)); ?>)</a>
         <p class="thread__date">
           スレッド作成日：<?= h($thread_data->created); ?>
         </p>

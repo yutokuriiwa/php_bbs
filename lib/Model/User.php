@@ -30,6 +30,14 @@ class User extends \Bbs\Model {
     }
   }
 
+  public function delete() {
+    $stmt = $this->db->prepare("UPDATE users SET delflag = :delflag,modified = now() where id = :id");
+    $stmt->execute([
+      ':delflag' => 1,
+      ':id' => $_SESSION['me']->id,
+    ]);
+  }
+
   public function login($values) {
     $stmt = $this->db->prepare("SELECT * FROM users WHERE email = :email;");
     $stmt->execute([
@@ -49,9 +57,9 @@ class User extends \Bbs\Model {
       throw new \Bbs\Exception\UnmatchEmailOrPassword();
     }
 
-    // パスワードが一致しないとエラー
-    if ($user->delflag === 1) {
-      throw new \Bbs\Exception\UserDelete();
+    // 削除フラグが立っているとエラー
+    if ($user->delflag == 1) {
+      throw new \Bbs\Exception\DeleteUser();
     }
 
     return $user;

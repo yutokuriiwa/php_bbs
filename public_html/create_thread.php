@@ -1,7 +1,6 @@
 <?php
 require_once(__DIR__ .'/header.php');
 require_once(__DIR__ . '/redirect.php');
-
 ?>
 <h1 class="page__ttl">新規スレッド</h1>
 <form action="create_thread_complete.php" method="post" class="form-group new_thread" id="new_thread">

@@ -12,12 +12,34 @@ class Thread extends \Bbs\Controller {
   }
 
   public function createComment() {
-    $threadModel = new \Bbs\Model\Thread();
-    $threadModel->createComment([
-      'thread_id' => $_POST['thread_id'],
-      'user_id' => $_SESSION['me']->id,
-      'content' => $_POST['content']
-    ]);
+    try {
+      $this->validate();
+      if (!isset($_POST['content'])) {
+        echo "不正な投稿です！";
+      exit;
+      }
+      if ($_POST['content'] === '') {
+        throw new \Bbs\Exception\EmptyPost("コメントが入力されていません！");
+      }
+      if (mb_strlen($_POST['content']) >= 50) {
+        throw new \Bbs\Exception\CharLength();
+      }
+    } catch (\Bbs\Exception\EmptyPost $e) {
+        $this->setErrors('comment', $e->getMessage());
+    } catch (\Bbs\Exception\CharLength $e) {
+        $this->setErrors('comment', $e->getMessage());
+    }
+
+    if ($this->hasError()) {
+      return;
+    } else {
+        $threadModel = new \Bbs\Model\Thread();
+        $threadModel->createComment([
+          'thread_id' => $_POST['thread_id'],
+          'user_id' => $_SESSION['me']->id,
+          'content' => $_POST['content']
+        ]);
+    }
   }
 
   public function createThread() {
@@ -56,17 +78,17 @@ class Thread extends \Bbs\Controller {
   }
 
 
-  // private function _validate() {
-  //   if (!isset($_POST['token']) || $_POST['token'] !== $_SESSION['token']) {
-  //     echo "Invalid Token!";
-  //     exit;
-  //   }
-  //   if (!isset($_POST['email']) || !isset($_POST['password'])) {
-  //     echo "Invalid Form!";
-  //     exit;
-  //   }
-  //   if ($_POST['email'] === '' || $_POST['password'] === '') {
-  //     throw new \Bbs\Exception\EmptyPost();
-  //   }
-  // }
+  private function validate() {
+    if (!isset($_POST['token']) || $_POST['token'] !== $_SESSION['token']) {
+      echo "不正なトークンです!";
+      exit;
+    }
+    // if (!isset($_POST['thread_name']) || !isset($_POST['comment']) || !isset($_POST['content'])) {
+    //   echo "不正な投稿です！";
+    //   exit;
+    // }
+    // if ($_POST['thread_name'] === '' || $_POST['comment'] === '' || $_POST['content'] === '') {
+    //   throw new \Bbs\Exception\EmptyComment();
+    // }
+  }
 }
