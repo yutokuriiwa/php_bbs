@@ -25,12 +25,6 @@ require_once(__DIR__ .'/../config/config.php');
       if(isset($_SESSION['me'])) { ?>
       <li><a href="<?= SITE_URL; ?>/create_thread.php">スレッド作成</a></li>
       <li class="mypage"><a href="<?= SITE_URL; ?>/mypage.php">マイページ</a></li>
-      <li class="user-btn">
-      <form action="logout.php" method="post" id="logout">
-        <input type="submit" value="ログアウト">
-        <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">
-      </form>
-      </li>
       <?php } else { ?>
         <li class="user-btn"><a href="<?= SITE_URL; ?>/login.php">ログイン</a></li>
         <li><a href="<?= SITE_URL; ?>/signup.php">ユーザー登録</a></li>
@@ -39,7 +33,11 @@ require_once(__DIR__ .'/../config/config.php');
   </nav>
   <?php
     if(isset($_SESSION['me'])) { ?>
-    <div class="name-show">こんにちは <span><?= h($_SESSION['me']->username); ?></span>さん!!</div>
+    <div class="name-show">Hello <span><?= h($_SESSION['me']->username); ?></span>!!</div>
+    <form action="logout.php" method="post" id="logout" class="user-btn">
+      <input type="submit" value="ログアウト">
+      <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">
+    </form>
     <?php  } ?>
 </header>
 <div class="wrapper">

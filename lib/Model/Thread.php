@@ -11,7 +11,7 @@ class Thread extends \Bbs\Model {
 
   // スレッド1件取得
   public function getThread($id){
-    $stmt = $this->db->prepare("SELECT * FROM threads WHERE id = :id");
+    $stmt = $this->db->prepare("SELECT * FROM threads WHERE id = :id AND delflag = 0");
     $stmt->bindValue(":id",$id);
     $stmt->execute();
     return $stmt->fetch(\PDO::FETCH_OBJ);

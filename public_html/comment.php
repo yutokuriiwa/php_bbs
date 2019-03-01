@@ -2,6 +2,8 @@
 require_once(__DIR__ .'/header.php');
 require_once(__DIR__ . '/redirect.php');
 
+$app = new Bbs\Controller\Thread();
+$app->run('createComment');
 $thread_id = $_GET['thread_id'];
 $threadApp = new Bbs\Model\Thread();
 $thread = $threadApp->getThread($thread_id);
@@ -30,15 +32,17 @@ $thread = $threadApp->getThread($thread_id);
       </li>
     </ul>
     <!-- ログインしてないと書き込めないようにする -->
-    <form action="comment_confirm.php" method="post" class="form-group"">
+    <form action="" method="post" class="form-group"">
       <div class="form-group">
         <label>コメント</label>
-        <textarea type="text" name="content" class="form-control" placeholder=""></textarea>
+        <textarea type="text" name="content" class="form-control"></textarea>
+        <p class="err"><?= h($app->getErrors('comment')); ?></p>
       </div>
       <input type="hidden" name="thread_id" value="<?= h($thread->id); ?>">
       <div class="form-group">
         <input type="submit" value="確認" class="btn btn-primary">
       </div>
+      <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">
     </form>
     <p class="comment-page thread__date">スレッド作成日付：<?= h($thread->created); ?>
     </p>

@@ -27,6 +27,10 @@ $app->run();
     <button class="btn btn-primary" onclick="document.getElementById('userupdate').submit();">更新</button>
     <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">
   </form>
+  <form class="user-delete" action="delete_user_confirm.php" method="post">
+    <input type="submit" class="btn btn-primary" value="退会する">
+    <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">
+  </form>
 </div><!--container -->
 <?php
 require_once(__DIR__ .'/footer.php');
