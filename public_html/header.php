@@ -23,7 +23,7 @@ require_once(__DIR__ .'/../config/config.php');
       <li><a href="<?= SITE_URL; ?>">ホーム</a></li>
       <?php
       if(isset($_SESSION['me'])) { ?>
-      <li><a href="<?= SITE_URL; ?>/create_thread.php">スレッド作成</a></li>
+      <li><a href="<?= SITE_URL; ?>/thread_create.php">スレッド作成</a></li>
       <li class="mypage"><a href="<?= SITE_URL; ?>/mypage.php">マイページ</a></li>
       <?php } else { ?>
         <li class="user-btn"><a href="<?= SITE_URL; ?>/login.php">ログイン</a></li>
@@ -33,7 +33,7 @@ require_once(__DIR__ .'/../config/config.php');
   </nav>
   <?php
     if(isset($_SESSION['me'])) { ?>
-    <div class="name-show">Hello <span><?= h($_SESSION['me']->username); ?></span>!!</div>
+    <div class="prof-show">こんにちは <span class="name"><?= h($_SESSION['me']->username); ?></span>さん<span class="image"><img src="./gazou/img_5cfa2e5c0c60e.jpg" alt=""></span></div>
     <form action="logout.php" method="post" id="logout" class="user-btn">
       <input type="submit" value="ログアウト">
       <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">

@@ -5,7 +5,7 @@ require_once(__DIR__ . '/redirect.php');
 $threadApp = new Bbs\Model\Thread();
 $thread = $threadApp->getThreadAll();
 ?>
-<h1 class="page__ttl">BBS</h1>
+<h1 class="page__ttl">CODE LAB BBS</h1>
 <ul class="thread">
   <?php foreach($thread as $thread_data): ?>
     <li class="thread__item">
@@ -30,9 +30,9 @@ $thread = $threadApp->getThreadAll();
         </li>
       </ul>
       <div class="operation">
-        <a href="<?= SITE_URL; ?>/comment.php?thread_id=<?= $thread_data->id; ?>">書き込み&すべて読む(<?= h($threadApp->getCommentCount($thread_data->id)); ?>)</a>
+        <a href="<?= SITE_URL; ?>/thread_disp.php?thread_id=<?= $thread_data->id; ?>">書き込み&すべて読む(<?= h($threadApp->getCommentCount($thread_data->id)); ?>)</a>
         <p class="thread__date">
-          スレッド作成日：<?= h($thread_data->created); ?>
+          スレッド作成日時：<?= h($thread_data->created); ?>
         </p>
       </div>
     </li>

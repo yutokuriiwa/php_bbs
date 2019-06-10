@@ -4,16 +4,21 @@ namespace Bbs\Controller;
 
 class UserUpdate extends \Bbs\Controller {
   public function run() {
+    $this->showUser();
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+      $this->updateUser();
+    }
+  }
+
+  protected function showUser() {
     $user = new \Bbs\Model\User();
     $userData = $user->find($_SESSION['me']->id);
     $this->setValues('username', $userData->username);
     $this->setValues('email', $userData->email);
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-      $this->postProcess();
-    }
+    $this->setValues('image', $userData->image);
   }
 
-  protected function postProcess() {
+  protected function updateUser() {
     // バリデーション
     try {
       $this->validate();
@@ -22,7 +27,6 @@ class UserUpdate extends \Bbs\Controller {
     } catch (\Bbs\Exception\InvalidName $e) {
       $this->setErrors('username', $e->getMessage());
     }
-
     $this->setValues('username', $_POST['username']);
     $this->setValues('email', $_POST['email']);
 
@@ -30,18 +34,34 @@ class UserUpdate extends \Bbs\Controller {
       return;
     } else {
       // ユーザー情報更新
+      $user_img = $_FILES['image'];
+      $old_img = $_POST['old_image'];
+      $ext = substr($user_img['name'], strrpos($user_img['name'], '.') + 1);
+      $user_img['name'] = uniqid("img_") .'.'. $ext;
       try {
         $userModel = new \Bbs\Model\User();
-        $userModel->update([
-          'username' => $_POST['username'],
-          'email' => $_POST['email']
-        ]);
+        if($user_img['size'] > 0) {
+          unlink('./gazou/'.$old_img);
+          move_uploaded_file($user_img['tmp_name'],'./gazou/'.$user_img['name']);
+          $userModel->update([
+            'username' => $_POST['username'],
+            'email' => $_POST['email'],
+            'userimg' => $user_img['name']
+          ]);
+        } else {
+          $userModel->update([
+            'username' => $_POST['username'],
+            'email' => $_POST['email'],
+            'userimg' => $old_img
+          ]);
+        }
       }
       catch (\Bbs\Exception\DuplicateEmail $e) {
         $this->setErrors('email', $e->getMessage());
         return;
       }
     }
+    $_SESSION['me']->username = $_POST['username'];
     header('Location: '. SITE_URL . '/mypage.php');
     exit;
   }

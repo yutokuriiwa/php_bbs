@@ -14,7 +14,7 @@ $app->run();
     <div class="form-group">
       <p>ユーザー名：<?= isset($app->getValues()->username) ? h($app->getValues()->username): ''; ?></p>
     </div>
-  <form class="user-delete user-confirm" action="delete_user_complete.php" method="post">
+  <form class="user-delete user-confirm" action="user_delete_done.php" method="post">
     <a class="btn btn-primary" href="javascript:history.back();">まだしません。</a>
     <input type="submit" class="btn btn-primary" value="退会">
     <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">

@@ -44,7 +44,7 @@ label {
   justify-content: space-between;
   align-items: center;
   nav {
-    width: 80%;
+    width: 70%;
     ul {
       display: flex;
       padding: 20px 0;
@@ -59,12 +59,22 @@ label {
       }
     }
   }
-  .name-show {
+  .prof-show {
     // width: 20%;
-    margin-right: -50px;
-    span {
+    // margin-right: -50px;
+    display: flex;
+    align-items: center;
+    .name {
       font-weight: bold;
       color: #007bff;
+    }
+    .image {
+      img {
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+      }
     }
   }
 }
@@ -254,4 +264,25 @@ label {
 .user-disp {
   font-size: 16px;
   margin-bottom: 50px;
+}
+
+
+.imgarea {
+  img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+  }
+}
+
+.imgarea:empty {
+  width: 0;
+  height: 0;
+}
+
+.file-btn {
+  width: 180px;
+  font-size: 12px;
+  font-weight: bold;
 }
