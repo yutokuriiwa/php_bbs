@@ -104,8 +104,8 @@ label {
 
 .thread {
   &__item {
-    background: #fafafa;
-    border: 1px solid rgb(102, 97, 97);
+    background: #fcfcfc;
+    border: 1.5px solid rgb(154, 150, 150);
     padding: 20px;
     margin-bottom: 50px;
     .comment-page.thread__date {
@@ -266,7 +266,7 @@ label {
   margin-bottom: 50px;
 }
 
-
+// マイページ
 .imgarea {
   img {
     border-radius: 50%;
@@ -285,4 +285,10 @@ label {
   width: 180px;
   font-size: 12px;
   font-weight: bold;
+}
+
+
+// フッター
+.copy {
+  text-align: center;
 }
