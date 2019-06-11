@@ -5,21 +5,17 @@ namespace Bbs\Controller;
 class Thread extends \Bbs\Controller {
   public function run() {
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
-      // var_dump($_POST['type']);
-      // exit();
-      // $_POST['type'] = $_POST['type'];
       if ($_POST['type']  === 'createthread') {
         $this->createThread();
-      } elseif($_POST['type']  === 'outputcsv') {
-        // var_dump('csv');
-        // exit();
       } elseif($_POST['type']  === 'createcomment') {
         $this->createComment();
-      }
+      } 
+    } elseif($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['type'])) {
+      $this->searchThread();
     }
   }
 
-  public function createThread(){
+  private function createThread(){
     try {
       $this->validate();
     } catch (\Bbs\Exception\EmptyPost $e) {
@@ -35,18 +31,18 @@ class Thread extends \Bbs\Controller {
       return;
     } else {
       $threadModel = new \Bbs\Model\Thread();
-        $threadModel->createThread([
-          'title' => $_POST['thread_name'],
-          'comment' => $_POST['comment'],
-          'user_id' => $_SESSION['me']->id
-        ]);
+      $threadModel->createThread([
+        'title' => $_POST['thread_name'],
+        'comment' => $_POST['comment'],
+        'user_id' => $_SESSION['me']->id
+      ]);
 
       header('Location: '. SITE_URL);
       exit;
     }
   }
 
-  public function createComment() {
+  private function createComment() {
     try {
         $this->validate();
       } catch (\Bbs\Exception\EmptyPost $e) {
@@ -68,19 +64,54 @@ class Thread extends \Bbs\Controller {
           ]);
       }
       header('Location: '. SITE_URL . '/thread_disp.php?thread_id=' . $_POST['thread_id']);
-      exit;
+      exit();
   }
 
-  // コントローラーに入れる
+  public function searchThread(){
+    try {
+      $keyword = $_GET['keyword'];
+      $this->setValues('keyword', $keyword);
+      $threadModel = new \Bbs\Model\Thread();
+      $threadData = $threadModel->searchThread($keyword);
+      return $threadData;
+    } catch(Exception $e) {
+      // echo $e->getMessage();
+    }
+  }
+
+  public function outputCsv($thread_id){
+    try {
+      $threadModel = new \Bbs\Model\Thread();
+      $data = $threadModel->getCommentCsv($thread_id);
+      $csv=array('コメント番号','ユーザー名','内容','日付');
+      $csv=mb_convert_encoding($csv,'SJIS-WIN','UTF-8');
+      
+      header('Content-Type: application/octet-stream');
+      header('Content-Disposition: attachment; filename=thread.csv');
+      $stream = fopen('php://output', 'w');
+      $i = 0;
+      foreach ($data as $row) {
+        if($i === 0) {
+          fputcsv($stream , $csv);
+        }
+        fputcsv($stream , $row);
+        $i++;
+      }
+    } catch(Exception $e) {
+      // 例外処理をここに書きます
+      echo $e->getMessage();
+    }
+  }
+
   private function validate() {
     if ($_POST['type'] === 'createthread') {
       if (!isset($_POST['token']) || $_POST['token'] !== $_SESSION['token']) {
         echo "不正なトークンです!";
-        exit;
+      exit();
       }
       if (!isset($_POST['thread_name'])){
         echo '不正な投稿です';
-        exit;
+      exit();
       }
       if ($_POST['thread_name'] === '' || $_POST['comment'] === ''){
         throw new \Bbs\Exception\EmptyPost("スレッド名または最初のコメントが入力されていません！");
@@ -88,7 +119,7 @@ class Thread extends \Bbs\Controller {
     } elseif( $_POST['type'] === 'createcomment' ) {
       if (!isset($_POST['content'])) {
         echo "不正な投稿です！";
-      exit;
+        exit();
       }
       if ($_POST['content'] === ''){
         throw new \Bbs\Exception\EmptyPost("コメントが入力されていません！");

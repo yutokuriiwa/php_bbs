@@ -33,6 +33,13 @@ class Thread extends \Bbs\Model {
     return $stmt->fetchAll(\PDO::FETCH_OBJ);
   }
 
+  public function getCommentCsv($thread_id){
+    // すべてのコメントを取得する
+    $stmt = $this->db->prepare("SELECT comment_num,username,content,comments.created FROM (threads inner join comments on threads.id = comments.thread_id) INNER JOIN  users ON comments.user_id = users.id WHERE threads.id =:thread_id AND comments.delflag = 0 ORDER BY comment_num ASC;");
+    $stmt->execute([':thread_id' => $thread_id]);
+    return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+  }
+
   // コメント数取得
   public function getCommentCount($thread_id) {
     $stmt = $this->db->prepare("SELECT COUNT(comment_num) FROM 	comments  WHERE thread_id = :thread_id AND delflag = 0;");
@@ -41,6 +48,13 @@ class Thread extends \Bbs\Model {
     // FETCH_ASSOCは列名を記述し配列で取り出す設定をしている。
     $res =  $stmt->fetch(\PDO::FETCH_ASSOC);
     return $res['COUNT(comment_num)'];
+  }
+
+  // スレッド検索
+  public function searchThread($keyword) {
+    $stmt = $this->db->prepare("SELECT * FROM threads WHERE title LIKE :title AND delflag = 0;");
+    $stmt->execute([':title' => '%'.$keyword.'%']);
+    return $stmt->fetchAll(\PDO::FETCH_OBJ);
   }
 
   public function createComment($values) {

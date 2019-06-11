@@ -16,8 +16,9 @@ $threadDisp = $threadMod->getThread($thread_id);
       <h2 class="thread__ttl">
         <?= h($threadDisp->title); ?>
       </h2>
-      <form id="csvoutput">
+      <form id="csvoutput" method="post" action="csv.php">
         <button class="btn btn-primary" onclick="document.getElementById('csvoutput').submit();">CSV出力</button>
+        <input type="hidden" name="thread_id" value="<?= h($thread_id); ?>">
         <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">
         <input type="hidden" name="type" value="outputcsv">
       </form>
@@ -44,7 +45,7 @@ $threadDisp = $threadMod->getThread($thread_id);
         <p class="err"><?= h($threadCon->getErrors('comment')); ?></p>
       </div>
       <div class="form-group">
-        <input type="submit" value="確認" class="btn btn-primary">
+        <input type="submit" value="書き込み" class="btn btn-primary">
       </div>
       <input type="hidden" name="thread_id" value="<?= h($thread_id); ?>">
       <input type="hidden" name="type" value="createcomment">
