@@ -8,7 +8,7 @@ class Login extends \Bbs\Controller {
     // ログインしていればトップページへ移動
     if($this->isLoggedIn()) {
       header('Location: ' . SITE_URL);
-      exit;
+      exit();
     }
     // POSTメソッドがリクエストされていればpostProcessメソッド実行
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -52,7 +52,7 @@ class Login extends \Bbs\Controller {
       $_SESSION['me'] = $user;
 
       // トップページへリダイレクト
-      header('Location: '. SITE_URL);
+      header('Location: '. SITE_URL . '/thread_all.php');
       exit;
     }
   }

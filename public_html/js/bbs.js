@@ -1,5 +1,5 @@
 $(function () {
-  'use strict';
+  // 'use strict';
   // $('#new_comment').on('submit', function () {
   //   let thread_id = $('#new_thread_id').val();
   //   let name = $('#new_name').val();
@@ -29,11 +29,11 @@ $(function () {
   // $('input[type=file]').after('<span></span>');
 
   // アップロードするファイルを選択
-  $('input[type=file]').change(function() {
+  $('input[type=file]').change(function () {
     var file = $(this).prop('files')[0];
 
     // 画像以外は処理を停止
-    if (! file.type.match('image.*')) {
+    if (!file.type.match('image.*')) {
       // クリア
       $(this).val('');
       $('.imgarea').html('');
@@ -42,10 +42,32 @@ $(function () {
 
     // 画像表示
     var reader = new FileReader();
-    reader.onload = function() {
+    reader.onload = function () {
       var img_src = $('<img>').attr('src', reader.result);
       $('.imgarea').html(img_src);
     }
     reader.readAsDataURL(file);
+  });
+
+  $('.fav__btn').on('click', function () {
+    $favbtn = $(this);
+    $threadid = $favbtn.parent().parent().data('threadid');
+    $myid = $('.prof-show').data('me');
+    $.ajax({
+      type: 'post',
+      url: 'http://localhost:8000/public_html/ajax.php',
+      data: {
+        'thread_id': $threadid,
+        'user_id':  $myid,
+      },
+      success: function (data) {
+        if (data == 1) {
+          $($favbtn).addClass('active');
+        } else {
+          $($favbtn).removeClass('active');
+        }
+      }
+    });
+    return false;
   });
 })

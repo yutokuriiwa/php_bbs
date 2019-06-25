@@ -9,14 +9,14 @@ $thread_id = $_GET['thread_id'];
 $threadMod = new Bbs\Model\Thread();
 $threadDisp = $threadMod->getThread($thread_id);
 ?>
-<h1 class="page__ttl"></h1>
+<h1 class="page__ttl">スレッド詳細</h1>
 <div class="thread">
   <div class="thread__item">
     <div class="thread__head">
       <h2 class="thread__ttl">
         <?= h($threadDisp->title); ?>
       </h2>
-      <form id="csvoutput" method="post" action="csv.php">
+      <form id="csvoutput" method="post" action="thread_csv.php">
         <button class="btn btn-primary" onclick="document.getElementById('csvoutput').submit();">CSV出力</button>
         <input type="hidden" name="thread_id" value="<?= h($thread_id); ?>">
         <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">

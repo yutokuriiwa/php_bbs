@@ -40,50 +40,65 @@ label {
 
 .header {
   background: rgba(245, 244, 244, 0.705);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  nav {
-    width: 70%;
-    ul {
-      display: flex;
-      padding: 20px 0;
-      li {
-        font-size: 20px;
-        flex-basis: 15%;
-        font-family: 'M PLUS Rounded 1c', sans-serif;
-        text-align: center;
+  &__inner {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    nav {
+      // width: 70%;
+      ul {
+        margin-bottom: 0;
         display: flex;
-        align-items: center;
-        justify-content: center;
+        padding: 20px 0;
+        li {
+          font-size: 20px;
+          // flex-basis: 15%;
+          font-family: 'M PLUS Rounded 1c', sans-serif;
+          text-align: center;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          & + li {
+            margin-left: 10px;
+          }
+        }
       }
     }
-  }
-  .prof-show {
-    // width: 20%;
-    // margin-right: -50px;
-    display: flex;
-    align-items: center;
-    .name {
-      font-weight: bold;
-      color: #007bff;
+    .header-r {
+      display: flex;
     }
-    .image {
-      img {
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-        object-fit: cover;
+    .prof-show {
+      // width: 20%;
+      // margin-right: -50px;
+      display: flex;
+      align-items: center;
+      .name {
+        font-weight: bold;
+        color: #007bff;
+      }
+      .image {
+        img {
+          border-radius: 50%;
+          width: 40px;
+          height: 40px;
+          object-fit: cover;
+        }
       }
     }
   }
 }
 
 .user-btn {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
   input[type=submit] {
     color: #007bff;
     background: none;
     border: none;
+    // display: none;
     &:hover {
       color: #0056b3;
       text-decoration: underline;
@@ -291,4 +306,26 @@ label {
 // フッター
 .copy {
   text-align: center;
+}
+
+// お気に入りボタン
+.fav__btn {
+  font-size: 20px;
+  &.active {
+    color: rgb(232, 232, 38);
+  }
+}
+// .fav__btn.active {
+// }
+
+.form-search {
+  display: flex;
+  input[type=submit] {
+    width: 100px;
+    height: 30px;
+    font-size: 15px;
+    line-height: 30px;
+    padding: 0;
+    font-weight: bold;
+  }
 }

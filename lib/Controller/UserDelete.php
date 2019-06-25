@@ -32,8 +32,8 @@ class UserDelete extends \Bbs\Controller {
       session_destroy();
 
     // ログインページへリダイレクト
-    header('Location: ' . SITE_URL . '/login.php');
-    exit;
+    header('Location: ' . SITE_URL . '/index.php');
+    exit();
     }
   }
 }

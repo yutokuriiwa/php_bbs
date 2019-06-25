@@ -9,7 +9,7 @@ class Thread extends \Bbs\Controller {
         $this->createThread();
       } elseif($_POST['type']  === 'createcomment') {
         $this->createComment();
-      } 
+      }
     } elseif($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['type'])) {
       $this->searchThread();
     }
@@ -36,7 +36,6 @@ class Thread extends \Bbs\Controller {
         'comment' => $_POST['comment'],
         'user_id' => $_SESSION['me']->id
       ]);
-
       header('Location: '. SITE_URL);
       exit;
     }
@@ -67,7 +66,7 @@ class Thread extends \Bbs\Controller {
       exit();
   }
 
-  public function searchThread(){
+  private function searchThread(){
     try {
       $keyword = $_GET['keyword'];
       $this->setValues('keyword', $keyword);
@@ -83,12 +82,13 @@ class Thread extends \Bbs\Controller {
     try {
       $threadModel = new \Bbs\Model\Thread();
       $data = $threadModel->getCommentCsv($thread_id);
-      $csv=array('コメント番号','ユーザー名','内容','日付');
+      $csv=array('num','username','content','date');
       $csv=mb_convert_encoding($csv,'SJIS-WIN','UTF-8');
-      
+      $date = date("YmdH:i:s");
       header('Content-Type: application/octet-stream');
-      header('Content-Disposition: attachment; filename=thread.csv');
+      header('Content-Disposition: attachment; filename='. $date .'_thread.csv');
       $stream = fopen('php://output', 'w');
+      stream_filter_prepend($stream,'convert.iconv.utf-8/cp932');
       $i = 0;
       foreach ($data as $row) {
         if($i === 0) {
