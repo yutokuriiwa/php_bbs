@@ -21,7 +21,7 @@ $app->run();
     <div class="form-group">
       <label>プロフィール画像</label>
       <label>
-      <span class="file-btn btn btn-primary">
+      <span class="file-btn btn btn-info">
         ファイルを選んでください
         <input type="file" name="image" class="form" style="display:none" accept="image/*">
       </span>
@@ -38,7 +38,7 @@ $app->run();
     <input type="hidden" name="old_image" value="<?= h($app->getValues()->image); ?>">
   </form>
   <form class="user-delete" action="user_delete_confirm.php" method="post">
-    <input type="submit" class="btn btn-primary" value="退会する">
+    <input type="submit" class="btn btn-default" value="退会する">
     <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">
   </form>
 </div><!--container -->
