@@ -19,7 +19,6 @@ class UserUpdate extends \Bbs\Controller {
   }
 
   protected function updateUser() {
-    // バリデーション
     try {
       $this->validate();
     } catch (\Bbs\Exception\InvalidEmail $e) {
@@ -33,7 +32,6 @@ class UserUpdate extends \Bbs\Controller {
     if ($this->hasError()) {
       return;
     } else {
-      // ユーザー情報更新
       $user_img = $_FILES['image'];
       $old_img = $_POST['old_image'];
       $ext = substr($user_img['name'], strrpos($user_img['name'], '.') + 1);
@@ -63,20 +61,20 @@ class UserUpdate extends \Bbs\Controller {
     }
     $_SESSION['me']->username = $_POST['username'];
     header('Location: '. SITE_URL . '/mypage.php');
-    exit;
+    exit();
   }
 
 
   private function validate() {
     if (!isset($_POST['token']) || $_POST['token'] !== $_SESSION['token']) {
       echo "不正なトークンです!";
-      exit;
+      exit();
     }
     if (!filter_var($_POST['email'],FILTER_VALIDATE_EMAIL)) {
-      throw new \Bbs\Exception\InvalidEmail();
+      throw new \Bbs\Exception\InvalidEmail("メールアドレスが不正です!");
     }
     if ($_POST['username'] === '') {
-      throw new \Bbs\Exception\InvalidName();
+      throw new \Bbs\Exception\InvalidName("ユーザー名が入力されていません!");
     }
   }
 }

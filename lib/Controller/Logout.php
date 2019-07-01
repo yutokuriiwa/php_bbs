@@ -2,7 +2,6 @@
 
 namespace Bbs\Controller;
 
-// Controllerクラス継承
 class Logout extends \Bbs\Controller {
 
   public function run() {
@@ -11,7 +10,7 @@ class Logout extends \Bbs\Controller {
       // CSRF対策
       if (!isset($_POST['token']) || $_POST['token'] !== $_SESSION['token']) {
         echo "不正なトークンです!";
-        exit;
+        exit();
       }
 
       // セッション変数に格納されている値を空にする

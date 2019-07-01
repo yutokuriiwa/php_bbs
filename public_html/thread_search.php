@@ -4,22 +4,26 @@ require_once(__DIR__ . '/redirect.php');
 
 $threadCon = new Bbs\Controller\Thread();
 $threadMod = new Bbs\Model\Thread();
-$threads =$threadCon->searchThread();
+$threads =$threadCon->run();
 ?>
-<h1 class="page__ttl">スレッド検索</h1>
+<h1 class="page__ttl">スレッド名検索</h1>
 <form action="" method="get" class="form-group form-search">
   <div class="form-group">
     <input type="text" name="keyword" value="<?= isset($threadCon->getValues()->keyword) ? h($threadCon->getValues()->keyword): ''; ?>" placeholder="スレッド検索">
-    <p class="err"></p>
+    <p class="err"><?= h($threadCon->getErrors('keyword')); ?></p>
   </div>
   <div class="form-group">
-    <input type="submit" value="検索" class="btn btn-primary" value="">
+    <input type="submit" value="検索" class="btn btn-primary">
+    <input type="hidden" name="type" value="searchthread">
   </div>
 </form>
-<?php $con = count($threads); ?>
+<?php $threads != '' ? $con = count($threads) : ''; ?>
+<?php if (($threadCon->getErrors('keyword'))): ?>
+<?php else : ?>
 <div>キーワード：<?= $_GET['keyword']; ?>　　該当件数：<?= $con; ?>件</div>
+<?php endif; ?>
 <ul class="thread">
-<?php if(count($threads) > 0): ?>
+<?php if ($con > 0): ?>
   <?php foreach($threads as $thread): ?>
     <li class="thread__item">
       <div class="thread__head">

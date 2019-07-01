@@ -2,15 +2,13 @@
 
 namespace Bbs\Controller;
 
-// Controllerクラス継承
 class Login extends \Bbs\Controller {
   public function run() {
     // ログインしていればトップページへ移動
-    if($this->isLoggedIn()) {
+    if ($this->isLoggedIn()) {
       header('Location: ' . SITE_URL);
       exit();
     }
-    // POSTメソッドがリクエストされていればpostProcessメソッド実行
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $this->postProcess();
     }
@@ -39,7 +37,6 @@ class Login extends \Bbs\Controller {
         $this->setErrors('login', $e->getMessage());
         return;
       }
-      // ユーザー削除フラグ
       catch (\Bbs\Exception\DeleteUser $e) {
         $this->setErrors('login', $e->getMessage());
         return;
@@ -53,7 +50,7 @@ class Login extends \Bbs\Controller {
 
       // トップページへリダイレクト
       header('Location: '. SITE_URL . '/thread_all.php');
-      exit;
+      exit();
     }
   }
 
@@ -62,14 +59,13 @@ class Login extends \Bbs\Controller {
     // トークンが空またはPOST送信とセッションに格納された値が異なるとエラー
     if (!isset($_POST['token']) || $_POST['token'] !== $_SESSION['token']) {
       echo "トークンが不正です!";
-      exit;
+      exit();
     }
     // emailとpasswordのキーがなかった場合、強制終了
     if (!isset($_POST['email']) || !isset($_POST['password'])) {
       echo "不正なフォームから登録されています!";
-      exit;
+      exit();
     }
-    // 入力値が空だった場合エラー
     if ($_POST['email'] === '' || $_POST['password'] === '') {
       throw new \Bbs\Exception\EmptyPost("メールアドレスとパスワードを入力してください!");
     }

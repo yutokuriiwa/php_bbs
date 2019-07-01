@@ -1,13 +1,14 @@
 <?php
 require_once(__DIR__ .'/header.php');
-$threadApp = new Bbs\Model\Thread();
-$threads = $threadApp->getThreadAll();
+$threadMod = new Bbs\Model\Thread();
+$threadCon = new Bbs\Controller\Thread();
+$threadCon->run();
+$threads = $threadMod->getThreadAll();
 ?>
 <h1 class="page__ttl">スレッド一覧</h1>
 <form action="thread_search.php" method="get" class="form-group form-search">
   <div class="form-group">
     <input type="text" name="keyword" placeholder="スレッド検索">
-    <p class="err"></p>
   </div>
   <div class="form-group">
     <input type="submit" value="検索" class="btn btn-primary">
@@ -25,7 +26,7 @@ $threads = $threadApp->getThreadAll();
       </div>
       <ul class="thread__body">
         <?php
-          $comments = $threadApp->getComment($thread->t_id);
+          $comments = $threadMod->getComment($thread->t_id);
           foreach($comments as $comment):
         ?>
         <li class="comment__item">
@@ -39,7 +40,7 @@ $threads = $threadApp->getThreadAll();
         </li>
       </ul>
       <div class="operation">
-        <a href="<?= SITE_URL; ?>/thread_disp.php?thread_id=<?= $thread->t_id; ?>">書き込み&すべて読む(<?= h($threadApp->getCommentCount($thread->t_id)); ?>)</a>
+        <a href="<?= SITE_URL; ?>/thread_disp.php?thread_id=<?= $thread->t_id; ?>">書き込み&すべて読む(<?= h($threadMod->getCommentCount($thread->t_id)); ?>)</a>
         <p class="thread__date">
           スレッド作成日時：<?= h($thread->created); ?>
         </p>

@@ -9,8 +9,10 @@ $app->run();
   <div class="form-group">
     <label>スレッド名</label>
     <input type="text" name="thread_name" class="form-control" value="<?= isset($app->getValues()->thread_name) ? h($app->getValues()->thread_name) : ''; ?>">
+  </div>
+  <div class="form-group">
     <label>最初のコメント</label>
-    <input type="text" name="comment" class="form-control" value="<?= isset($app->getValues()->comment) ? h($app->getValues()->comment) : ''; ?>">
+    <textarea type="text" name="comment" class="form-control"><?= isset($app->getValues()->comment) ? h($app->getValues()->comment) : ''; ?></textarea>
     <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">
     <input type="hidden" name="type" value="createthread">
     <p class="err"><?= h($app->getErrors('create_thread')); ?></p>

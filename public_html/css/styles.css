@@ -18,6 +18,12 @@ label {
   font-size: 20px;
 }
 
+textarea {
+  resize: none;
+  font-size: 18px;
+  height: 200px;
+}
+
 .btn {
   width: 150px;
   padding: 10px 0;
@@ -63,7 +69,7 @@ label {
 }
 
 .header__inner nav ul li + li {
-  margin-left: 10px;
+  margin-left: 20px;
 }
 
 .header__inner .header-r {
@@ -169,12 +175,6 @@ label {
   width: 500px;
   margin: 0 auto 0 0;
   font-size: 15px;
-}
-
-.thread__item .form-group textarea {
-  resize: none;
-  font-size: 18px;
-  height: 200px;
 }
 
 .thread__item .form-group input[type="submit"] {
