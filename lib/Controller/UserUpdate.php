@@ -46,6 +46,7 @@ class UserUpdate extends \Bbs\Controller {
             'email' => $_POST['email'],
             'userimg' => $user_img['name']
           ]);
+          $_SESSION['me']->image = $user_img['name'];
         } else {
           $userModel->update([
             'username' => $_POST['username'],
