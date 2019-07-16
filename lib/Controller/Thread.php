@@ -10,7 +10,7 @@ class Thread extends \Bbs\Controller {
       } elseif($_POST['type']  === 'createcomment') {
         $this->createComment();
       }
-    } elseif($_SERVER['REQUEST_METHOD'] === 'GET' && ($_GET['type'] === 'searchthread')) {
+    } elseif($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['type'])) {
       $threadData = $this->searchThread();
       return $threadData;
     }
@@ -114,6 +114,7 @@ class Thread extends \Bbs\Controller {
   }
 
   private function validate() {
+    // 修正
     if ($_POST['type'] === 'createthread') {
       if (!isset($_POST['token']) || $_POST['token'] !== $_SESSION['token']) {
         echo "不正なトークンです!";
@@ -132,6 +133,7 @@ class Thread extends \Bbs\Controller {
       if (mb_strlen($_POST['comment']) > 200) {
         throw new \Bbs\Exception\CharLength("コメントが長すぎます！");
       }
+      // 修正
     } elseif( $_POST['type'] === 'createcomment' ) {
       if (!isset($_POST['content'])) {
         echo "不正な投稿です！";
@@ -143,7 +145,7 @@ class Thread extends \Bbs\Controller {
       if (mb_strlen($_POST['content']) > 200) {
         throw new \Bbs\Exception\CharLength("コメントが長すぎます！");
       }
-    } elseif( $_GET['type'] === 'searchthread' ) {
+    } elseif(isset($_GET['type'])) {
       if (!isset($_GET['keyword'])) {
         echo "不正な投稿です！";
         exit();
