@@ -6,7 +6,7 @@
   define('DB_USERNAME','b38dfe910df109');
   // define('DB_PASSWORD','root');
   define('DB_PASSWORD','bc1c069a');
-  define('SITE_URL', 'http://' . $_SERVER['HTTP_HOST'] . '/public_html');
+  define('SITE_URL', 'http://' . $_SERVER['HTTP_HOST'] . '');
   require_once(__DIR__ .'/../lib/Controller/functions.php');
   require_once(__DIR__ . '/autoload.php');
   session_start();

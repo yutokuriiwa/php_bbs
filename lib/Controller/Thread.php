@@ -37,7 +37,7 @@ class Thread extends \Bbs\Controller {
         'comment' => $_POST['comment'],
         'user_id' => $_SESSION['me']->id
       ]);
-      header('Location: '. SITE_URL);
+      header('Location: '. SITE_URL . '/thread_all.php');
       exit();
     }
   }

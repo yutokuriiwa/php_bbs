@@ -29,7 +29,7 @@ $(function () {
     $.ajax({
       type: 'post',
       // 動的に表示
-      url: origin + '/public_html/ajax.php',
+      url: origin + '/ajax.php',
       data: {
         'thread_id': $threadid,
         'user_id': $myid,
