@@ -32,7 +32,7 @@ $(function () {
       url: origin + '/public_html/ajax.php',
       data: {
         'thread_id': $threadid,
-        'user_id':  $myid,
+        'user_id': $myid,
       },
       success: function (data) {
         if (data == 1) {
@@ -44,4 +44,4 @@ $(function () {
     });
     return false;
   });
-})
+});

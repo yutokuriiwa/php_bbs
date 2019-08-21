@@ -32,8 +32,7 @@ $threads = $threadApp->getThreadFavoriteAll();
       </ul>
       <div class="operation">
         <a href="<?= SITE_URL; ?>/thread_disp.php?thread_id=<?= $thread->t_id; ?>">書き込み&すべて読む(<?= h($threadApp->getCommentCount($thread->t_id)); ?>)</a>
-        <p class="thread__date">
-          スレッド作成日時：<?= h($thread->created); ?>
+        <p class="thread__date">スレッド作成日時：<?= h($thread->created); ?>
         </p>
       </div>
     </li>
