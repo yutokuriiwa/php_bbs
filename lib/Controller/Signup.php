@@ -1,7 +1,6 @@
 <?php
 namespace Bbs\Controller;
 
-// Controllerクラス継承
 class Signup extends \Bbs\Controller {
   public function run() {
     if ($this->isLoggedIn()) {

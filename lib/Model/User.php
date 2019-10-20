@@ -53,6 +53,7 @@ class User extends \Bbs\Model {
       throw new \Bbs\Exception\UnmatchEmailOrPassword();
     }
 
+    $password = password_hash($values['password'],PASSWORD_DEFAULT);
     // パスワードが一致しないとエラー
     if (!password_verify($values['password'], $user->password)) {
       throw new \Bbs\Exception\UnmatchEmailOrPassword();

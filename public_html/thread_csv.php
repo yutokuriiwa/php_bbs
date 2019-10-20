@@ -1,6 +1,6 @@
 <?php
 require_once(__DIR__ .'/../config/config.php');
-// var_dump($thread_id);
+require_once(__DIR__ . '/redirect.php');
 if(isset($_POST['type'])) {
   $thread_id=$_POST['thread_id'];
   $threadCon = new Bbs\Controller\Thread();

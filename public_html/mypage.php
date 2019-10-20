@@ -22,7 +22,7 @@ $app->run();
       <label>プロフィール画像</label>
       <label>
       <span class="file-btn btn btn-info">
-        ファイルを選んでください
+        画像ファイルを選んでください
         <input type="file" name="image" class="form" style="display:none" accept="image/*">
       </span>
       </label>

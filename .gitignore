@@ -1,3 +1,5 @@
 /old
 config/config.php
 */gazou/
+node_modules
+config/heroku-config.php

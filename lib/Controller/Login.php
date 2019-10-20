@@ -1,5 +1,5 @@
 <?php
-
+// use \Exception;
 namespace Bbs\Controller;
 
 class Login extends \Bbs\Controller {
@@ -9,6 +9,7 @@ class Login extends \Bbs\Controller {
       header('Location: ' . SITE_URL);
       exit();
     }
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $this->postProcess();
     }
@@ -48,7 +49,7 @@ class Login extends \Bbs\Controller {
       // ユーザー情報をセッションに格納
       $_SESSION['me'] = $user;
 
-      // トップページへリダイレクト
+      // スレッド一覧へリダイレクト
       header('Location: '. SITE_URL . '/thread_all.php');
       exit();
     }
