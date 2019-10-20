@@ -39,14 +39,28 @@ class Signup extends \Bbs\Controller {
         $this->setErrors('email', $e->getMessage());
         return;
       }
+
+      $userModel = new \Bbs\Model\User();
+      $user = $userModel->login([
+        'email' => $_POST['email'],
+        'password' => $_POST['password']
+      ]);
+      session_regenerate_id(true);
+      $_SESSION['me'] = $user;
+      header('Location: '. SITE_URL . '/thread_all.php');
+      exit();
     }
-    // ToDo:ユーザー登録後、ログイン処理を行う
   }
+
   // バリデーションメソッド
   private function validate() {
     // トークンが空またはPOST送信とセッションに格納された値が異なるとエラー
     if (!isset($_POST['token']) || $_POST['token'] !== $_SESSION['token']) {
       echo "不正なトークンです!";
+      exit();
+    }
+    if (!isset($_POST['email']) || !isset($_POST['username']) || !isset($_POST['password'])) {
+      echo "不正なフォームから登録されています!";
       exit();
     }
     if (!filter_var($_POST['email'],FILTER_VALIDATE_EMAIL)) {
