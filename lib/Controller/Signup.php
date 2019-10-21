@@ -4,7 +4,7 @@ namespace Bbs\Controller;
 class Signup extends \Bbs\Controller {
   public function run() {
     if ($this->isLoggedIn()) {
-      header('Location: ' . SITE_URL);
+      header('Location: '. SITE_URL . '/thread_all.php');
       exit();
     }
     // POSTメソッドがリクエストされていればpostProcessメソッド実行

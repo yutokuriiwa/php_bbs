@@ -4,7 +4,7 @@ class Login extends \Bbs\Controller {
   public function run() {
     // ログインしていればトップページへ移動
     if ($this->isLoggedIn()) {
-      header('Location: ' . SITE_URL);
+      header('Location: '. SITE_URL . '/thread_all.php');
       exit();
     }
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {

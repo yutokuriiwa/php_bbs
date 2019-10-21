@@ -24,11 +24,28 @@ require_once(__DIR__ .'/../config/config.php');
   <nav>
     <ul>
       <li><a href="<?= SITE_URL; ?>/">ホーム</a></li>
-      <li class="user-btn"><a href="<?= SITE_URL; ?>/login.php">ログイン</a></li>
-      <li><a href="<?= SITE_URL; ?>/signup.php">ユーザー登録</a></li>
+      <?php
+      if(isset($_SESSION['me'])) { ?>
+      <li><a href="<?= SITE_URL; ?>/thread_all.php">一覧</a></li>
+      <li><a href="<?= SITE_URL; ?>/thread_favorite.php">お気に入り</a></li>
+      <li><a href="<?= SITE_URL; ?>/thread_create.php">作成</a></li>
+      <?php } else { ?>
+        <li class="user-btn"><a href="<?= SITE_URL; ?>/login.php">ログイン</a></li>
+        <li><a href="<?= SITE_URL; ?>/signup.php">ユーザー登録</a></li>
+      <?php } ?>
     </ul>
   </nav>
   <div class="header-r">
+    <?php
+      if(isset($_SESSION['me'])) { ?>
+      <div class="prof-show">
+        <a href="<?= SITE_URL; ?>/mypage.php"><span class="name"><?= h($_SESSION['me']->username); ?></span></a>
+      </div>
+      <form action="logout.php" method="post" id="logout" class="user-btn">
+        <input type="submit" value="ログアウト">
+        <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">
+      </form>
+    <?php  } ?>
   </div>
 </div>
 </header>
