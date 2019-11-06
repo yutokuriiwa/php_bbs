@@ -5,6 +5,8 @@ class Thread extends \Bbs\Controller {
     if($_SERVER['REQUEST_METHOD'] === 'POST') {
       if ($_POST['type']  === 'createthread') {
         $this->createThread();
+      } elseif($_POST['type']  === 'createcomment') {
+        $this->createComment();
       }
     }
   }
@@ -31,6 +33,30 @@ class Thread extends \Bbs\Controller {
       exit();
     }
   }
+
+  private function createComment() {
+    try {
+        $this->validate();
+      } catch (\Bbs\Exception\EmptyPost $e) {
+          $this->setErrors('comment', $e->getMessage());
+      } catch (\Bbs\Exception\CharLength $e) {
+          $this->setErrors('comment', $e->getMessage());
+      }
+      $this->setValues('content', $_POST['content']);
+      if ($this->hasError()) {
+        return;
+      } else {
+          $threadModel = new \Bbs\Model\Thread();
+          $threadModel->createComment([
+            'thread_id' => $_POST['thread_id'],
+            'user_id' => $_SESSION['me']->id,
+            'content' => $_POST['content']
+          ]);
+      }
+      header('Location: '. SITE_URL . '/thread_disp.php?thread_id=' . $_POST['thread_id']);
+      exit();
+  }
+
   private function validate() {
     if ($_POST['type'] === 'createthread') {
       if (!isset($_POST['token']) || $_POST['token'] !== $_SESSION['token']) {

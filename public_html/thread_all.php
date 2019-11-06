@@ -29,7 +29,7 @@ $threads = $threadMod->getThreadAll();
         </li>
       </ul>
       <div class="operation">
-        <a href="">書き込み&すべて読む()</a>
+        <a href="<?= SITE_URL; ?>/thread_disp.php?thread_id=<?= $thread->id; ?>">書き込み&すべて読む(<?= h($threadMod->getCommentCount($thread->id)); ?>)</a>
         <p class="thread__date">スレッド作成日時：<?= h($thread->created); ?></p>
       </div>
     </li>
