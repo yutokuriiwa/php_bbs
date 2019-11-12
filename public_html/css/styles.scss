@@ -284,28 +284,48 @@ textarea {
 
 // マイページ
 .imgarea {
+  position: relative;
   img {
     border-radius: 50%;
-    width: 150px;
-    height: 150px;
+    width: 200px;
+    height: 200px;
     object-fit: cover;
   }
 }
 
-.imgarea:empty {
-  width: 0;
-  height: 0;
+.noimage {
+  img {
+    border-radius: 0;
+  }
 }
 
+// .imgarea:empty {
+//   width: 0;
+//   height: 0;
+// }
+
 .file-btn {
-  width: 200px;
+  display: inline-block;
   font-size: 12px;
   font-weight: bold;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  border-radius: 5px;
+  background: #323232;
+  color:#fff;
+  padding: 5px 20px;
+  cursor: pointer;
+  &:hover {
+    opacity: .8;
+  }
 }
 
 // フッター
 .copy {
   text-align: center;
+  border-top: 1px solid #eee;
+  padding-top: 10px;
 }
 
 // お気に入りボタン

@@ -1,6 +1,4 @@
 $(function () {
-  // アップロードするファイルを選択
-  console.log();
   $('input[type=file]').change(function () {
     var file = $(this).prop('files')[0];
 
@@ -8,7 +6,7 @@ $(function () {
     if (!file.type.match('image.*')) {
       // クリア
       $(this).val('');
-      $('.imgarea').html('');
+      $('.imgfile').html('');
       return;
     }
 
@@ -16,13 +14,9 @@ $(function () {
     var reader = new FileReader();
     reader.onload = function () {
       var img_src = $('<img>').attr('src', reader.result);
-      $('.imgarea').html(img_src);
+      $('.imgfile').html(img_src);
+      $('.imgarea').removeClass('noimage');
     }
     reader.readAsDataURL(file);
-  });
-
-  $('.fav__btn').on('click', function () {
-    $favbtn = $(this);
-    $($favbtn).toggleClass('active');
   });
 });
