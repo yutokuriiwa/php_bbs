@@ -38,9 +38,12 @@ require_once(__DIR__ .'/../config/config.php');
   <div class="header-r">
     <?php
       if(isset($_SESSION['me'])) { ?>
-      <div class="prof-show">
-        <a href="<?= SITE_URL; ?>/mypage.php"><span class="name"><?= h($_SESSION['me']->username); ?></span></a>
-      </div>
+      <div class="prof-show" data-me="<?= h($_SESSION['me']->id); ?>"><a href="<?= SITE_URL; ?>/mypage.php"><span class="name"><?= h($_SESSION['me']->username); ?></span><span class="image">
+      <?php if(isset($_SESSION['me']->image)): ?>
+        <img src="./gazou/<?= h($_SESSION['me']->image); ?>" alt="">
+      <?php else: ?>
+      <?php endif; ?>
+      </span></a></div>
       <form action="logout.php" method="post" id="logout" class="user-btn">
         <input type="submit" value="ログアウト">
         <input type="hidden" name="token" value="<?= h($_SESSION['token']); ?>">

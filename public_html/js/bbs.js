@@ -19,4 +19,28 @@ $(function () {
     }
     reader.readAsDataURL(file);
   });
+
+  $('.fav__btn').on('click', function () {
+    origin = location.origin;
+    $favbtn = $(this);
+    $threadid = $favbtn.parent().parent().data('threadid');
+    $myid = $('.prof-show').data('me');
+    $.ajax({
+      type: 'post',
+
+      url: origin + '/public_html/ajax.php',
+      data: {
+        'thread_id': $threadid,
+        'user_id': $myid,
+      },
+      success: function (data) {
+        if (data == 1) {
+          $($favbtn).addClass('active');
+        } else {
+          $($favbtn).removeClass('active');
+        }
+      }
+    });
+    return false;
+  });
 });
