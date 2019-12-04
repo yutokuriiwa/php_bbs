@@ -27,20 +27,18 @@ $(function () {
     $myid = $('.prof-show').data('me');
     $.ajax({
       type: 'post',
-
       url: origin + '/public_html/ajax.php',
       data: {
         'thread_id': $threadid,
         'user_id': $myid,
-      },
-      success: function (data) {
+      }
+    })
+      .done(function (data) {
         if (data == 1) {
           $($favbtn).addClass('active');
         } else {
           $($favbtn).removeClass('active');
         }
-      }
-    });
-    return false;
-  });
+      })
+  })
 });
