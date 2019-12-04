@@ -8,8 +8,12 @@ class Thread extends \Bbs\Controller {
       } elseif($_POST['type']  === 'createcomment') {
         $this->createComment();
       }
+    } elseif($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['type'])) {
+      $threadData = $this->searchThread();
+      return $threadData;
     }
   }
+
   private function createThread(){
     try {
       $this->validate();
@@ -78,6 +82,25 @@ class Thread extends \Bbs\Controller {
       }
     } catch(Exception $e) {
       echo $e->getMessage();
+    }
+  }
+
+  public function searchThread(){
+    try {
+      $this->validate();
+    } catch (\Bbs\Exception\EmptyPost $e) {
+      $this->setErrors('keyword', $e->getMessage());
+    } catch (\Bbs\Exception\CharLength $e) {
+      $this->setErrors('keyword', $e->getMessage());
+    }
+    $keyword = $_GET['keyword'];
+    $this->setValues('keyword', $keyword);
+    if ($this->hasError()) {
+      return;
+    } else {
+      $threadModel = new \Bbs\Model\Thread();
+      $threadData = $threadModel->searchThread($keyword);
+      return $threadData;
     }
   }
 
