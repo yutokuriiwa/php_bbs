@@ -138,4 +138,10 @@ class Thread extends \Bbs\Model {
     }
   }
 
+  public function getCommentCsv($thread_id){
+    $stmt = $this->db->prepare("SELECT comment_num,username,content,comments.created FROM (threads INNER JOIN comments on threads.id = comments.thread_id) INNER JOIN  users ON comments.user_id = users.id WHERE threads.id =:thread_id AND comments.delflag = 0 ORDER BY comment_num ASC;");
+    $stmt->execute([':thread_id' => $thread_id]);
+    return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+  }
+
 }
